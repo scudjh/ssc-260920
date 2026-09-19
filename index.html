@@ -72,6 +72,7 @@ main{max-width:760px;margin:0 auto;padding:14px 14px 60px}
 .tl>*{position:relative;margin-bottom:10px}
 .tl>*::before{content:"";position:absolute;left:-16px;top:14px;width:8px;height:8px;border-radius:50%;background:var(--line)}
 .tl>.card::before{background:var(--cobalt);box-shadow:0 0 0 3px #D9E2FB}
+.tl>.card.mini::before{background:#B6C0CC;box-shadow:none}
 .tl>.mark::before{background:#B6C0CC}
 /* 워밍업/휴식/점심 마커 */
 .mark{display:flex;align-items:center;gap:8px;font-family:var(--num);font-weight:600;font-size:11.5px;letter-spacing:.22em;color:var(--muted);padding:6px 2px}
@@ -97,6 +98,15 @@ main{max-width:760px;margin:0 auto;padding:14px 14px 60px}
 .plate small{display:block;font-size:8.5px;font-weight:600;letter-spacing:.12em;color:var(--muted);margin-bottom:3px}
 .head .ttl{font-size:15px;font-weight:700;line-height:1.35}
 .head .sub{font-size:12px;color:var(--muted);margin-top:2px}
+.head .sub.sub2{margin-top:4px}
+.head .sub.sub2 b{color:var(--ink);font-weight:700}
+/* ---------- 접힌(클럽 선수 없는) 경기 카드 ---------- */
+.card.mini{box-shadow:none}
+.card.mini>.head{padding:10px 14px;border-bottom:none}
+.card.mini .plate{background:var(--bg);border-color:var(--line);box-shadow:none;color:var(--muted);width:44px;padding:6px 0}
+.card.mini .plate small{color:#9AA6B2}
+.card.mini .ttl{font-size:13.5px;font-weight:600;color:var(--muted)}
+.card.mini .sub{color:#9AA6B2}
 .heat{padding:10px 14px 4px}
 .heat+.heat{border-top:1px dashed var(--line)}
 .heat .hlabel{display:inline-block;font-family:var(--num);font-weight:700;font-size:12px;letter-spacing:.06em;color:var(--cobalt);border:1.5px solid var(--cobalt);border-radius:6px;padding:2px 8px;margin-bottom:8px}
@@ -138,7 +148,6 @@ footer.note b{color:var(--ink)}
 </header>
 
 <div class="filters">
-  <div class="tabrow" id="dayTabs" role="group" aria-label="일차 선택"></div>
   <div class="whobar">
     <button class="whotoggle" id="whoToggle" aria-expanded="false" aria-controls="whoPanel">
       <span class="lab">선수 필터</span><span class="val" id="whoVal">전체 선수</span><span class="caret">▾</span>
@@ -153,25 +162,20 @@ footer.note b{color:var(--ink)}
 <footer class="note">
   <b>참고</b> · 개회식, 워밍업과 경기 종료는 원문 경기 일정표 순서 그대로 표시했으며,
   서울스포츠클럽 선수가 없는 경기는 "경기 N~M 진행"으로 줄여 표기했습니다.
+  시간은 원문 경기 일정표에 표기된 시작 시각만 표시했으며(1번 경기 09:00~, 개회식 10:00~, 5번 경기 10:30~),
+  그 외 경기는 원문에도 별도 시각 없이 앞 경기에 이어 진행되는 것으로 되어 있어 시간을 표기하지 않았습니다.
   배번 뒤 숫자는 학년이며, 유치부(5세/6세)는 학년 구분이 없어 표시하지 않습니다.
   이 대회는 원문 대진표에 조편성 명단이 그대로 확정되어 있어 예선/결승 구분 없이 전 경기가 명단 확정 경기입니다.
   유치부에는 이름이 같은 동명이인 선수(김윤, 5세부·6세부 각 1명)가 있어 배번으로 구분해 표시했습니다.
 </footer>
 
 <script>
-const DATA = {"members": [{"bib": 1, "name": "김도하", "div": "유치부(5세)", "gender": "남", "grade": null}, {"bib": 2, "name": "김윤", "div": "유치부(5세)", "gender": "남", "grade": null}, {"bib": 4, "name": "박가빈", "div": "유치부(5세)", "gender": "여", "grade": null}, {"bib": 3, "name": "김윤", "div": "유치부(6세)", "gender": "남", "grade": null}, {"bib": 5, "name": "김나혜", "div": "유치부(6세)", "gender": "여", "grade": null}, {"bib": 14, "name": "이지수", "div": "레이싱 1학년", "gender": "여", "grade": 1}, {"bib": 13, "name": "송재이", "div": "레이싱 1학년", "gender": "여", "grade": 1}, {"bib": 10, "name": "양찬호", "div": "레이싱 2학년", "gender": "남", "grade": 2}, {"bib": 11, "name": "김태리", "div": "레이싱 2학년", "gender": "여", "grade": 2}, {"bib": 12, "name": "양은우", "div": "레이싱 2학년", "gender": "여", "grade": 2}, {"bib": 6, "name": "양진혁", "div": "레이싱 5학년", "gender": "남", "grade": 5}, {"bib": 8, "name": "홍예린", "div": "레이싱 6학년", "gender": "여", "grade": 6}, {"bib": 10, "name": "김나연", "div": "레이싱 3학년", "gender": "여", "grade": 3}, {"bib": 9, "name": "유자의", "div": "레이싱 4학년", "gender": "여", "grade": 4}], "extra": [], "events": [{"no": 1, "day": 1, "name": "남자 유치부(5세) 100m", "type": "ind", "heats": [["3조", [[1, "김도하", "", "서울스포츠클럽", null], [83, "강지훈", "", "동대문유아체능단", null], [90, "이리건", "", "동대문유아체능단", null]]], ["4조", [[2, "김윤", "", "서울스포츠클럽", null], [84, "고경빈", "", "동대문유아체능단", null], [91, "이석준", "", "동대문유아체능단", null]]]]}, {"no": 2, "day": 1, "name": "여자 유치부(5세) 100m", "type": "ind", "heats": [["1조", [[4, "박가빈", "", "서울스포츠클럽", null], [46, "박예나", "", "JOY스포츠아카데미", null], [99, "이다윤", "", "동대문유아체능단", null]]]]}, {"no": 3, "day": 1, "name": "남자 유치부(6세) 100m", "type": "ind", "heats": [["1조", [[3, "김윤", "", "서울스포츠클럽", null], [51, "김원우", "", "JOY스포츠아카데미", null], [105, "조민제", "", "동대문유아체능단", null]]]]}, {"no": 4, "day": 1, "name": "여자 유치부(6세) 100m", "type": "ind", "heats": [["1조", [[5, "김나혜", "", "서울스포츠클럽", null], [52, "정다인", "", "JOY스포츠아카데미", null], [111, "유가영", "", "동대문구민체육센터", null]]]]}, {"no": 9, "day": 1, "name": "여초부 레이싱 1학년 300m", "type": "ind", "heats": [["1조", [[14, "이지수", "", "서울스포츠클럽", 1], [13, "송재이", "", "서울스포츠클럽", 1], [40, "이시현", "", "professionl J", 1]]]]}, {"no": 10, "day": 1, "name": "남초부 레이싱 2학년 300m", "type": "ind", "heats": [["1조", [[10, "양찬호", "", "서울스포츠클럽", 2], [34, "박서진", "", "professionl J", 2], [126, "전해준", "", "동대문", 2]]]]}, {"no": 11, "day": 1, "name": "여초부 레이싱 2학년 300m", "type": "ind", "heats": [["1조", [[11, "김태리", "", "서울스포츠클럽", 2], [12, "양은우", "", "서울스포츠클럽", 2], [145, "권세아", "", "강북청소년센터", 2]]]]}, {"no": 12, "day": 1, "name": "남초부 레이싱 5학년 1,000m", "type": "ind", "heats": [["2조", [[6, "양진혁", "", "서울스포츠클럽", 5], [161, "이유준", "", "반포인라인클럽", 5]]]]}, {"no": 15, "day": 1, "name": "여초부 레이싱 6학년 1,000m", "type": "ind", "heats": [["1조", [[8, "홍예린", "", "서울스포츠클럽", 6], [79, "박서윤", "", "JOY스포츠아카데미", 6], [80, "조시현", "", "JOY스포츠아카데미", 6]]]]}, {"no": 23, "day": 1, "name": "여초부 레이싱 3학년 500m+D", "type": "ind", "heats": [["1조", [[10, "김나연", "", "서울스포츠클럽", 3], [39, "이시아", "", "professionl J", 3], [150, "이하린", "", "JIC인라인클럽", 3]]]]}, {"no": 25, "day": 1, "name": "여초부 레이싱 4학년 500m+D", "type": "ind", "heats": [["1조", [[9, "유자의", "", "서울스포츠클럽", 4], [151, "조연우", "", "JIC인라인클럽", 4], [162, "유소율", "", "반포인라인클럽", 4]]]]}], "refs": [], "days": {"1": "9월 20일 (일)"}, "program": {"1": [["e", "1"], ["e", "2"], ["e", "3"], ["e", "4"], ["m", "개회식"], ["e", "5"], ["e", "6"], ["e", "7"], ["e", "8"], ["e", "9"], ["e", "10"], ["e", "11"], ["e", "12"], ["e", "13"], ["e", "14"], ["e", "15"], ["m", "워밍업"], ["e", "16"], ["e", "17"], ["e", "18"], ["e", "19"], ["e", "20"], ["e", "21"], ["e", "22"], ["e", "23"], ["e", "24"], ["e", "25"], ["e", "26"], ["e", "27"], ["e", "28"], ["e", "29"], ["m", "워밍업"], ["e", "30"], ["e", "31"], ["e", "32"], ["e", "33"], ["end", "경기 종료"]]}};
+const DATA = {"members": [{"bib": 1, "name": "김도하", "div": "유치부(5세)", "gender": "남", "grade": null}, {"bib": 2, "name": "김윤", "div": "유치부(5세)", "gender": "남", "grade": null}, {"bib": 4, "name": "박가빈", "div": "유치부(5세)", "gender": "여", "grade": null}, {"bib": 3, "name": "김윤", "div": "유치부(6세)", "gender": "남", "grade": null}, {"bib": 5, "name": "김나혜", "div": "유치부(6세)", "gender": "여", "grade": null}, {"bib": 14, "name": "이지수", "div": "레이싱 1학년", "gender": "여", "grade": 1}, {"bib": 13, "name": "송재이", "div": "레이싱 1학년", "gender": "여", "grade": 1}, {"bib": 10, "name": "양찬호", "div": "레이싱 2학년", "gender": "남", "grade": 2}, {"bib": 11, "name": "김태리", "div": "레이싱 2학년", "gender": "여", "grade": 2}, {"bib": 12, "name": "양은우", "div": "레이싱 2학년", "gender": "여", "grade": 2}, {"bib": 6, "name": "양진혁", "div": "레이싱 5학년", "gender": "남", "grade": 5}, {"bib": 8, "name": "홍예린", "div": "레이싱 6학년", "gender": "여", "grade": 6}, {"bib": 10, "name": "김나연", "div": "레이싱 3학년", "gender": "여", "grade": 3}, {"bib": 9, "name": "유자의", "div": "레이싱 4학년", "gender": "여", "grade": 4}], "extra": [], "events": [{"no": 1, "day": 1, "name": "남자 유치부(5세) 100m", "type": "ind", "heats": [["3조", [[1, "김도하", "", "서울스포츠클럽", null], [83, "강지훈", "", "동대문유아체능단", null], [90, "이리건", "", "동대문유아체능단", null]]], ["4조", [[2, "김윤", "", "서울스포츠클럽", null], [84, "고경빈", "", "동대문유아체능단", null], [91, "이석준", "", "동대문유아체능단", null]]]]}, {"no": 2, "day": 1, "name": "여자 유치부(5세) 100m", "type": "ind", "heats": [["1조", [[4, "박가빈", "", "서울스포츠클럽", null], [46, "박예나", "", "JOY스포츠아카데미", null], [99, "이다윤", "", "동대문유아체능단", null]]]]}, {"no": 3, "day": 1, "name": "남자 유치부(6세) 100m", "type": "ind", "heats": [["1조", [[3, "김윤", "", "서울스포츠클럽", null], [51, "김원우", "", "JOY스포츠아카데미", null], [105, "조민제", "", "동대문유아체능단", null]]]]}, {"no": 4, "day": 1, "name": "여자 유치부(6세) 100m", "type": "ind", "heats": [["1조", [[5, "김나혜", "", "서울스포츠클럽", null], [52, "정다인", "", "JOY스포츠아카데미", null], [111, "유가영", "", "동대문구민체육센터", null]]]]}, {"no": 9, "day": 1, "name": "여초부 레이싱 1학년 300m", "type": "ind", "heats": [["1조", [[14, "이지수", "", "서울스포츠클럽", 1], [13, "송재이", "", "서울스포츠클럽", 1], [40, "이시현", "", "professionl J", 1]]]]}, {"no": 10, "day": 1, "name": "남초부 레이싱 2학년 300m", "type": "ind", "heats": [["1조", [[10, "양찬호", "", "서울스포츠클럽", 2], [34, "박서진", "", "professionl J", 2], [126, "전해준", "", "동대문", 2]]]]}, {"no": 11, "day": 1, "name": "여초부 레이싱 2학년 300m", "type": "ind", "heats": [["1조", [[11, "김태리", "", "서울스포츠클럽", 2], [12, "양은우", "", "서울스포츠클럽", 2], [145, "권세아", "", "강북청소년센터", 2]]]]}, {"no": 12, "day": 1, "name": "남초부 레이싱 5학년 1,000m", "type": "ind", "heats": [["2조", [[6, "양진혁", "", "서울스포츠클럽", 5], [161, "이유준", "", "반포인라인클럽", 5]]]]}, {"no": 15, "day": 1, "name": "여초부 레이싱 6학년 1,000m", "type": "ind", "heats": [["1조", [[8, "홍예린", "", "서울스포츠클럽", 6], [79, "박서윤", "", "JOY스포츠아카데미", 6], [80, "조시현", "", "JOY스포츠아카데미", 6]]]]}, {"no": 23, "day": 1, "name": "여초부 레이싱 3학년 500m+D", "type": "ind", "heats": [["1조", [[10, "김나연", "", "서울스포츠클럽", 3], [39, "이시아", "", "professionl J", 3], [150, "이하린", "", "JIC인라인클럽", 3]]]]}, {"no": 25, "day": 1, "name": "여초부 레이싱 4학년 500m+D", "type": "ind", "heats": [["1조", [[9, "유자의", "", "서울스포츠클럽", 4], [151, "조연우", "", "JIC인라인클럽", 4], [162, "유소율", "", "반포인라인클럽", 4]]]]}], "refs": [], "days": {"1": "9월 20일 (일)"}, "times": {"events": {"1": "09:00~", "5": "10:30~"}, "markers": {"개회식": "10:00~"}}, "heatCounts": {"1": 9, "2": 4, "3": 5, "4": 5, "5": 4, "6": 6, "7": 3, "8": 2, "9": 1, "10": 1, "11": 1, "12": 2, "13": 2, "14": 1, "15": 1, "16": 1, "17": 1, "18": 2, "19": 1, "20": 1, "21": 2, "22": 2, "23": 3, "24": 1, "25": 3, "26": 1, "27": 1, "28": 1, "29": 1}, "eventNames": {"1": "남자 유치부(5세) 100m", "2": "여자 유치부(5세) 100m", "3": "남자 유치부(6세) 100m", "4": "여자 유치부(6세) 100m", "5": "남초부 피트니스 1학년 200m", "6": "여초부 피트니스 1학년 200m", "7": "남초부 피트니스 2학년 200m", "8": "여초부 피트니스 2학년 200m", "9": "여초부 레이싱 1학년 300m", "10": "남초부 레이싱 2학년 300m", "11": "여초부 레이싱 2학년 300m", "12": "남초부 레이싱 5학년 1,000m", "13": "여초부 레이싱 5학년 1,000m", "14": "남초부 레이싱 6학년 1,000m", "15": "여초부 레이싱 6학년 1,000m", "16": "남자 중등부 500m+D", "17": "여자 중등부 500m+D", "18": "남초부 피트니스 3학년 300m", "19": "여초부 피트니스 3학년 300m", "20": "남초부 피트니스 4학년 300m", "21": "여초부 피트니스 4학년 300m", "22": "남초부 레이싱 3학년 500m+D", "23": "여초부 레이싱 3학년 500m+D", "24": "남초부 레이싱 4학년 500m+D", "25": "여초부 레이싱 4학년 500m+D", "26": "남초부 피트니스 5학년 400m", "27": "여초부 피트니스 5학년 400m", "28": "남초부 피트니스 6학년 400m", "29": "여초부 피트니스 6학년 400m", "30": "남초부 레이싱 1,2,3학년 최강자전 1,000m", "31": "여초부 레이싱 1,2,3학년 최강자전 1,000m", "32": "남초부 레이싱 4,5,6학년 최강자전 1,000m", "33": "여초부 레이싱 4,5,6학년 최강자전 1,000m"}, "program": {"1": [["e", "1"], ["e", "2"], ["e", "3"], ["e", "4"], ["m", "개회식"], ["e", "5"], ["e", "6"], ["e", "7"], ["e", "8"], ["e", "9"], ["e", "10"], ["e", "11"], ["e", "12"], ["e", "13"], ["e", "14"], ["e", "15"], ["m", "워밍업"], ["e", "16"], ["e", "17"], ["e", "18"], ["e", "19"], ["e", "20"], ["e", "21"], ["e", "22"], ["e", "23"], ["e", "24"], ["e", "25"], ["e", "26"], ["e", "27"], ["e", "28"], ["e", "29"], ["m", "워밍업"], ["e", "30"], ["e", "31"], ["e", "32"], ["e", "33"], ["end", "경기 종료"]]}};
 const DAYS = DATA.days;
 const EXTRA = new Set([]); // 클럽 소속이나 다른 소속명으로 출전하는 선수 (이번 대회는 없음)
 const isClub = (name, team) => team === "서울스포츠클럽" || EXTRA.has(name + "|" + team);
 
-/* ---- 대회 당일이면 해당 일차를 기본 선택 ---- */
-function defaultDay(){
-  const t = new Date();
-  const k = t.getFullYear()*10000 + (t.getMonth()+1)*100 + t.getDate();
-  const map = {20260920:1};
-  return map[k] || 0;
-}
-const state = { day: defaultDay(), who: "", panel: false };
+const state = { who: "", panel: false };
 
 const gradeLabel = (evName, g) => {
   if (g == null) return "";
@@ -192,15 +196,6 @@ const gradeLabel = (evName, g) => {
     [String(DATA.events.length),"명단 확정 경기"], [String(DATA.refs.length),"진출 대기 경기"]
   ].map(([b,s]) => `<div class="stat"><b>${b}</b><span>${s}</span></div>`).join("");
 })();
-
-/* ---- day tabs ---- */
-function renderTabs(){
-  const el = document.getElementById("dayTabs");
-  const tabs = [[0,"전체","일정"],[1,"1일차","9/20 일"]];
-  el.innerHTML = tabs.map(([d,l,s]) =>
-    `<button class="tab" data-d="${d}" aria-pressed="${state.day===d}">${l}<small>${s}</small></button>`).join("");
-  el.querySelectorAll("button").forEach(b => b.onclick = () => { state.day = +b.dataset.d; renderTabs(); renderApp(); });
-}
 
 /* ---- 접이식 선수 필터 ---- */
 function renderWho(){
@@ -296,75 +291,74 @@ function cardHTML(ev){
       : rows.map(t => relayTeamHTML(ev, t)).join("");
     return `<div class="heat"><span class="hlabel">${label}</span>${content}</div>`;
   }).join("");
+  const t = (DATA.times && DATA.times.events || {})[String(ev.no)];
+  const subTime = t ? ` · ${t}` : "";
+  const total = (DATA.heatCounts || {})[String(ev.no)];
+  const heatNote = total
+    ? `<div class="sub sub2">전체 ${total}조 중 <b>${ev.heats.map(h => h[0]).join(", ")}</b> 출전</div>`
+    : "";
   return `<article class="card">
     <div class="head">
       <div class="plate"><small>경기</small>${ev.no}</div>
-      <div><div class="ttl">${ev.name}</div><div class="sub">${DAYS[ev.day]} · ${ev.day}일차</div></div>
+      <div><div class="ttl">${ev.name}</div><div class="sub">${DAYS[ev.day]}${subTime}</div>${heatNote}</div>
     </div>${body}</article>`;
+}
+// 클럽 선수가 없거나(또는 선수 필터에 걸리지 않는) 경기: 접힌 카드로 부문/조 수만 표시
+function miniCardHTML(no){
+  const name = (DATA.eventNames || {})[no] || (DATA.events.find(e => String(e.no) === no) || {}).name || `경기 ${no}`;
+  const total = (DATA.heatCounts || {})[no];
+  const t = (DATA.times && DATA.times.events || {})[no];
+  const subTime = t ? ` · ${t}` : "";
+  const heatTxt = total ? `전체 ${total}조` : "조편성 없음";
+  return `<article class="card mini">
+    <div class="head">
+      <div class="plate"><small>경기</small>${no}</div>
+      <div><div class="ttl">${name}</div><div class="sub">${heatTxt}${subTime}</div></div>
+    </div></article>`;
 }
 function refHTML(r){
   return `<div class="refcard"><span class="rno">${r.no}</span>
     <div><div class="rt">${r.name}</div><div class="rwho">명단 미게재 · ${r.who}</div></div></div>`;
 }
-function skipHTML(buf){
-  if (!buf.length) return "";
-  const label = buf.length === 1 ? `경기 <b>${buf[0]}</b> 진행`
-    : `경기 <b>${buf[0]}~${buf[buf.length-1]}</b> 진행 · ${buf.length}경기`;
-  return `<div class="skip">${label}</div>`;
-}
 
-/* ---- 일차 타임라인 ---- */
-function dayHTML(d){
-  const items = DATA.program[String(d)];
+/* ---- 타임라인(단일 일차) ---- */
+function timelineHTML(){
+  const items = DATA.program["1"];
   const evByNo = {}; DATA.events.forEach(e => evByNo[String(e.no)] = e);
   const refByNo = {}; DATA.refs.forEach(r => refByNo[String(r.no)] = r);
-  let out = [], skipBuf = [], cardCnt = 0, pending = [];  // pending: 직전 마커들
-
-  const flushSkip = () => { if (skipBuf.length){ out.push(skipHTML(skipBuf)); skipBuf = []; } };
-  const flushPending = () => { pending.forEach(h => out.push(h)); pending = []; };
+  const markTimes = (DATA.times && DATA.times.markers) || {};
+  let out = [];
 
   items.forEach(([t, v]) => {
     if (t === "m"){
-      flushSkip();
       const cls = v === "워밍업" ? "" : "rest";
       const MARK_TXT = {"워밍업":"워 밍 업", "휴식":"휴 식", "점심시간":"점 심 시 간", "개회식":"개 회 식"};
       const txt = MARK_TXT[v] || v;
-      pending.push(`<div class="mark ${cls}">${txt}</div>`);
+      const mt = markTimes[v];
+      out.push(`<div class="mark ${cls}">${txt}${mt ? ` · ${mt}` : ""}</div>`);
     } else if (t === "end"){
-      flushSkip(); flushPending();
       out.push(`<div class="mark fin">${v}</div>`);
     } else {
       const ev = evByNo[v], ref = refByNo[v];
       if (ev){
         const card = cardHTML(ev);
-        if (card){ flushSkip(); flushPending(); out.push(card); cardCnt++; return; }
-        skipBuf.push(v); if (pending.length){ /* 마커 뒤 첫 항목이 스킵이어도 마커는 유지 */ flushPending(); }
+        out.push(card || miniCardHTML(v));
       } else if (ref && refVisible(ref)){
-        flushSkip(); flushPending(); out.push(refHTML(ref));
+        out.push(refHTML(ref));
       } else {
-        skipBuf.push(v); if (pending.length){ flushPending(); }
+        out.push(miniCardHTML(v));
       }
     }
   });
-  flushSkip(); flushPending();
-  return { html: out.join(""), cardCnt };
+  return out.join("");
 }
 
 function renderApp(){
   const app = document.getElementById("app");
-  const days = state.day === 0 ? Object.keys(DATA.days).map(Number).sort((a,b)=>a-b) : [state.day];
-  let html = "", any = false;
-  days.forEach(d => {
-    const { html: body, cardCnt } = dayHTML(d);
-    if (state.who && cardCnt === 0 && !body.includes("refcard")) return; // 선수 필터 시 해당 없는 날 생략
-    any = true;
-    html += `<div class="daytitle"><span class="d">DAY ${d}</span><span class="dt">${DAYS[d]}</span>
-      <span class="cnt">명단 확정 ${cardCnt}경기</span></div><div class="tl">${body}</div>`;
-  });
-  app.innerHTML = any ? html : `<div class="empty">선택한 조건에 해당하는 경기가 없습니다.<br>필터를 해제해 보세요.</div>`;
+  app.innerHTML = `<div class="tl">${timelineHTML()}</div>`;
 }
 
-renderTabs(); renderWho(); renderApp();
+renderWho(); renderApp();
 </script>
 </body>
 </html>
